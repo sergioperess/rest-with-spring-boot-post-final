@@ -2,11 +2,18 @@ package com.example.restwithspringboot.data;
 
 import java.io.Serializable;
 
-public class PersonVO implements Serializable {
+import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({"id", "firstName", "lastName", "adress", "gender"})
+public class PersonVO extends RepresentationModel<PersonVO> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private long id;    
+    @JsonProperty("id")
+    private long key;    
     private String firstName;
     private String lastName;
     private String adress;
@@ -28,8 +35,8 @@ public class PersonVO implements Serializable {
         return gender;
     }
 
-    public long getId() {
-        return id;
+    public long getKey() {
+        return key;
     }
 
     public String getLastName() {
@@ -48,8 +55,8 @@ public class PersonVO implements Serializable {
         this.gender = gender;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setKey(long key) {
+        this.key = key;
     }
 
     public void setLastName(String lastName) {
@@ -59,8 +66,8 @@ public class PersonVO implements Serializable {
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (id ^ (id >>> 32));
+        int result = super.hashCode();
+        result = prime * result + (int) (key ^ (key >>> 32));
         result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((adress == null) ? 0 : adress.hashCode());
@@ -72,12 +79,12 @@ public class PersonVO implements Serializable {
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
+        if (!super.equals(obj))
             return false;
         if (getClass() != obj.getClass())
             return false;
         PersonVO other = (PersonVO) obj;
-        if (id != other.id)
+        if (key != other.key)
             return false;
         if (firstName == null) {
             if (other.firstName != null)
@@ -100,8 +107,6 @@ public class PersonVO implements Serializable {
         } else if (!gender.equals(other.gender))
             return false;
         return true;
-    }
-    
-    
+    } 
     
 }

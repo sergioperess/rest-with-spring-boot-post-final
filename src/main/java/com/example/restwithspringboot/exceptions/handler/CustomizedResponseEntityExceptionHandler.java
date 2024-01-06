@@ -11,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.example.restwithspringboot.exceptions.ExceptionResponse;
+import com.example.restwithspringboot.exceptions.RequiredObjectIsNullException;
 import com.example.restwithspringboot.exceptions.ResourceNotFoundException;
 
 // Utilizado para concentrar um tratamento que será espalhado em todos os controllers
@@ -43,5 +44,18 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         // Utilizado para um erro feito pela pessoa, ou seja, 
         // utilizado para uma letra nesse caso         
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(RequiredObjectIsNullException.class)
+    public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(
+            Exception ex, WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(
+                new Date(), 
+                ex.getMessage(), 
+                request.getDescription(false));
+        
+        // Utilizado para um erro feito pela pessoa, ou seja, 
+        // utilizado para uma letra nesse caso         
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 }
