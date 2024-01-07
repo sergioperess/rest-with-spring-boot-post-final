@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 
+import com.example.restwithspringboot.data.BookVO;
 import com.example.restwithspringboot.data.PersonVO;
+import com.example.restwithspringboot.model.Book;
 import com.example.restwithspringboot.model.Person;
 
 
@@ -21,6 +23,18 @@ public class DozerMapper {
             PersonVO.class, Person.class)
             .addMapping(PersonVO::getKey, Person::setId);
     }
+
+    static{
+        mapper.createTypeMap(
+            Book.class, BookVO.class)
+            .addMapping(Book::getId, BookVO::setKey);
+        
+         mapper.createTypeMap(
+            BookVO.class, Book.class)
+            .addMapping(BookVO::getKey, Book::setId);
+    }
+
+    
 
     // O -> origem; D -> destino
     public static <O, D> D parseObject(O origin, Class<D> destination) {
