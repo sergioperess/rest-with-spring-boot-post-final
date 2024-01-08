@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.restwithspringboot.data.PersonVO;
 import com.example.restwithspringboot.services.PersonServices;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.example.restwithspringboot.util.MediaType;
@@ -26,6 +27,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
+//@CrossOrigin
 @RestController
 @RequestMapping("/api/person/v1")
 @Tag(name = "People", description = "Endpoints for Managing People")
@@ -60,6 +62,8 @@ public class PersonController {
             return service.findAll();
     }
 
+    // Permite acesso apenas pelo localhosta da porta 8080
+    @CrossOrigin(origins = "http://localhost:8080")
     // Entre chaves é necessário passar parâmetros obrigatórios
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.APPLICATION_YAML})
     @Operation(summary = "Listar uma pessoa pelo id", description = "Listar uma pessoa pelo id",
@@ -79,6 +83,7 @@ public class PersonController {
             return service.findById(id);
     }
 
+    @CrossOrigin(origins = {"http://localhost:8080", "https://sergio.com.br"})
     @PostMapping(consumes = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.APPLICATION_YAML},
                 produces = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML ,  MediaType.APPLICATION_YAML})
     @Operation(summary = "Adcionar uma pessoa", description = "Adicionar uma pessoa passando JSON, XML ou YAML",

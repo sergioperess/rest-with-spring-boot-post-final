@@ -3,7 +3,6 @@ package com.example.restwithspringboot.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.restwithspringboot.data.BookVO;
-import com.example.restwithspringboot.data.PersonVO;
 import com.example.restwithspringboot.services.BookServices;
 import com.example.restwithspringboot.util.MediaType;
 
