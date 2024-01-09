@@ -1,5 +1,6 @@
 package com.example.restwithspringboot.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import jakarta.persistence.Column;
@@ -13,7 +14,7 @@ import jakarta.persistence.TemporalType;
 
 @Entity
 @Table(name = "books")
-public class Book {
+public class Book implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
