@@ -18,6 +18,8 @@ import com.example.restwithspringboot.services.PersonServices;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+
 import com.example.restwithspringboot.util.MediaType;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -135,6 +137,24 @@ public class PersonController {
 
             // Retorna o status code correto, nesse caso o status 204
             return ResponseEntity.noContent().build();
+    }
+
+    // Entre chaves é necessário passar parâmetros obrigatórios
+    @PatchMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON , MediaType.APPLICATION_XML , MediaType.APPLICATION_YAML})
+    @Operation(summary = "Desabilitar uma pessoa pelo id", description = "Desabilitar uma pessoa pelo id",
+        tags = {"People"},
+        responses = {
+                @ApiResponse(description = "Success", responseCode = "200",
+                        content = @Content(schema = @Schema(implementation = PersonVO.class))
+                ),
+                @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content), 
+                @ApiResponse(description = "Not Found", responseCode = "404", content = @Content), 
+                @ApiResponse(description = "Internal Server Error", responseCode = "500", content = @Content),       
+        }
+    )   
+    public PersonVO disablePerson(@PathVariable(value = "id") Long id){
+            return service.disablePerson(id);
     }
 
    

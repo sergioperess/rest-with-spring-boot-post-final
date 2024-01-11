@@ -17,6 +17,8 @@ import com.example.restwithspringboot.exceptions.ResourceNotFoundException;
 import com.example.restwithspringboot.mapper.DozerMapper;
 import com.example.restwithspringboot.repository.PersonRepository;
 
+import jakarta.transaction.Transactional;
+
 // Utilizado pelo spring para injetar dados em outras classes durante a aplicação
 @Service
 public class PersonServices {
@@ -77,6 +79,22 @@ public class PersonServices {
 
     public PersonVO findById(Long id){
         logger.info("Finding one person");
+
+        var entity = repository.findById(id)
+                        .orElseThrow(() -> new ResourceNotFoundException("ID não encontrado"));
+
+        PersonVO vo = DozerMapper.parseObject(entity, PersonVO.class);
+        vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
+        return vo;
+    }
+
+
+    // Necessário utiliza-lo pois está sendo feito uma modificação no banco
+    @Transactional
+    public PersonVO disablePerson(Long id){
+        logger.info("Disabling one person");
+
+        repository.disablePerson(id);
 
         var entity = repository.findById(id)
                         .orElseThrow(() -> new ResourceNotFoundException("ID não encontrado"));

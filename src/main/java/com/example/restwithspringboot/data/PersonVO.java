@@ -18,9 +18,18 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
     private String lastName;
     private String adress;
     private String gender;
+    private Boolean enabled;
 
     public PersonVO(){
 
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getAdress() {
@@ -72,6 +81,7 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((adress == null) ? 0 : adress.hashCode());
         result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+        result = prime * result + ((enabled == null) ? 0 : enabled.hashCode());
         return result;
     }
 
@@ -106,7 +116,14 @@ public class PersonVO extends RepresentationModel<PersonVO> implements Serializa
                 return false;
         } else if (!gender.equals(other.gender))
             return false;
+        if (enabled == null) {
+            if (other.enabled != null)
+                return false;
+        } else if (!enabled.equals(other.enabled))
+            return false;
         return true;
-    } 
+    }
+
+
     
 }
