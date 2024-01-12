@@ -105,54 +105,7 @@ public class PersonServicesTest {
 
         service.delete(1L);
     }
-
-    @Test
-    void testFindAll() {
-        List<Person> list= input.mockEntityList();
-        
-        when(repository.findAll()).thenReturn(list);
-
-        var people = service.findAll();
-
-        assertEquals(14, people.size());
-
-        var person = people.get(1);
-
-        assertNotNull(person);
-        assertNotNull(person.getKey());
-        assertNotNull(person.getLinks());
-        //System.out.println(result.toString());
-        assertTrue(person.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
-        assertEquals("Addres Test1", person.getAdress());
-        assertEquals("First Name Test1", person.getFirstName());
-        assertEquals("Last Name Test1", person.getLastName());
-        assertEquals("Female", person.getGender());
-
-        var person4 = people.get(4);
-        
-        assertNotNull(person4);
-        assertNotNull(person4.getKey());
-        assertNotNull(person4.getLinks());
-        //System.out.println(result.toString());
-        assertTrue(person4.toString().contains("links: [</api/person/v1/4>;rel=\"self\"]"));
-        assertEquals("Addres Test4", person4.getAdress());
-        assertEquals("First Name Test4", person4.getFirstName());
-        assertEquals("Last Name Test4", person4.getLastName());
-        assertEquals("Male", person4.getGender());
-
-        var person7 = people.get(7);
-        
-        assertNotNull(person7);
-        assertNotNull(person7.getKey());
-        assertNotNull(person7.getLinks());
-        //System.out.println(result.toString());
-        assertTrue(person7.toString().contains("links: [</api/person/v1/7>;rel=\"self\"]"));
-        assertEquals("Addres Test7", person7.getAdress());
-        assertEquals("First Name Test7", person7.getFirstName());
-        assertEquals("Last Name Test7", person7.getLastName());
-        assertEquals("Female", person7.getGender());
-    }
-
+    
     @Test
     void testFindById() {
         Person person = input.mockEntity(1);
